@@ -1,0 +1,3 @@
+[submodule "libs/QtAppBase"]
+	path = libs/QtAppBase
+	url = https://github.com/caffedrine/QtAppBase
