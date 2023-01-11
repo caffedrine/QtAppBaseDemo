@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION 3.16)
 
 project(qtappbase_app LANGUAGES CXX C)
 
@@ -27,22 +27,18 @@ endif()
 find_package(QT NAMES Qt6 Qt5)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets Network Core Concurrent REQUIRED)
 
-## Include ASN.1 parser library
-#add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/libs/ASN1)
-#set(ASN1_LIB_DIR "${CMAKE_CURRENT_LIST_DIR}/libs/ASN1/build/deploy")
-## find_library(ASN1_LIB NAMES libASN1Parser libQtAppBase HINTS "${ASN1_LIB_DIR}/lib" REQUIRED)
-#include_directories( ${LIB_QTAPPBASE_DIR}/includes/thirdparty )
-#include_directories( ${LIB_QTAPPBASE_DIR}/includes )
+# Add ASN1 Parser library
+add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/libs/ASN1)
 
 # Find the precompiled libQtAppBase library and installit when --target QtAppBase
-set(LIB_QTAPPBASE_NAME QtAppBAse)
-add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/libs/${LIB_QTAPPBASE_NAME})
-#if(TARGET ${PROJECT_NAME})
-#    set(LIB_QTAPPBASE_DIR "${CMAKE_CURRENT_LIST_DIR}/libs/${LIB_QTAPPBASE_NAME}/build/deploy")
-#    # find_library(QTAPPBASE_LIB NAMES ${LIB_QTAPPBASE_NAME} lib${LIB_QTAPPBASE_NAME} HINTS "${CMAKE_BINARY_DIR}/libs/QtAppBase" "${CMAKE_BINARY_DIR}/libs/QtAppBase" REQUIRED)
-#    # include_directories(${LIB_QTAPPBASE_DIR}/includes/thirdparty)
-#    # include_directories(${LIB_QTAPPBASE_DIR}/includes)
-#endif()
+#set(LIB_QTAPPBASE_NAME QtAppBAse)
+#add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/libs/${LIB_QTAPPBASE_NAME})
+##if(TARGET ${PROJECT_NAME})
+##    set(LIB_QTAPPBASE_DIR "${CMAKE_CURRENT_LIST_DIR}/libs/${LIB_QTAPPBASE_NAME}/build/deploy")
+##    # find_library(QTAPPBASE_LIB NAMES ${LIB_QTAPPBASE_NAME} lib${LIB_QTAPPBASE_NAME} HINTS "${CMAKE_BINARY_DIR}/libs/QtAppBase" "${CMAKE_BINARY_DIR}/libs/QtAppBase" REQUIRED)
+##    # include_directories(${LIB_QTAPPBASE_DIR}/includes/thirdparty)
+##    # include_directories(${LIB_QTAPPBASE_DIR}/includes)
+##endif()
 
 add_executable(${PROJECT_NAME} src/main.cpp)
 
@@ -51,7 +47,7 @@ target_link_libraries(${PROJECT_NAME} PUBLIC
         Qt${QT_VERSION_MAJOR}::Network
         Qt${QT_VERSION_MAJOR}::Widgets
         Qt${QT_VERSION_MAJOR}::Concurrent
-        lib${LIB_QTAPPBASE_NAME})
+        ASN1Parser)
 
 ## Deploy base library to executable folder
 #file(GLOB QTAPPBASE_LIBS "${LIB_QTAPPBASE_DIR}/lib/*")
