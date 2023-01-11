@@ -1,6 +1,7 @@
 #include <QApplication>
 #include <QDebug>
 #include <ASN1_Object.h>
+#include <ASN1_includes.h>
 //#include <QtAppBase/Logger.h>
 
 #ifdef _WIN32
