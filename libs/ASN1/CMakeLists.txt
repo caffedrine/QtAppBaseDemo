@@ -9,10 +9,11 @@ file(GLOB_RECURSE LIB_SOURCES "src/*.c" "src/*.cpp")
 
 add_library(ASN1Parser SHARED ${LIB_SOURCES})
 set_target_properties(ASN1Parser PROPERTIES VERSION ${PROJECT_VERSION} SOVERSION 1)
+include_directories(src)
 
 configure_file(ASN1Parser.pc.in ASN1Parser.pc @ONLY)
 
-# List the /include directory
+# Public API headers
 target_include_directories(ASN1Parser PUBLIC
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src>
         $<INSTALL_INTERFACE:src>)
