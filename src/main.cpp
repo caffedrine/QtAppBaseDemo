@@ -1,8 +1,8 @@
 #include <QApplication>
 #include <QDebug>
-// #include <ASN1_Object.h>
-#include <Compiler.h>
-#include <utils/Logger.h>
+#include <ASN1_Object.h>
+//#include <Compiler.h>
+//#include <utils/Logger.h>
 
 #ifdef _WIN32
 #include <Windows.h>
@@ -34,16 +34,16 @@ int main(int argc, char *argv[])
 
     if (qobject_cast<QApplication *>(app.data()))
     {
-        base::setup_logger(false);
-        base::logger->info("Started application in GUI mode (use flag --nogui to launch in console mode)");
+        //base::setup_logger(false);
+        //base::logger->info("Started application in GUI mode (use flag --nogui to launch in console mode)");
         // MainWindow w;
         // w.show();
         return app->exec();
     }
     else
     {
-        base::setup_logger(true);
-        base::logger->info("Start application in console mode");
+        //base::setup_logger(true);
+        //base::logger->info("Start application in console mode");
         return app->exec();
     }
 }

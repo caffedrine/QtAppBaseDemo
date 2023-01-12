@@ -28,13 +28,13 @@ find_package(QT NAMES Qt6 Qt5)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets Network Core Concurrent REQUIRED)
 
 # Add ASN1 Parser library
-# add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/libs/ASN1)
+add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/libs/ASN1)
 
 # Find the precompiled libQtAppBase library and installit when --target QtAppBase
 set(LIB_QTAPPBASE_NAME QtAppBase)
 
 # 1. Either build library together with the project
-add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/libs/QtAppBase)
+# add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/libs/QtAppBase)
 
 ## 2. Either build library externally and then link it here
 #set(LIB_QTAPPBASE_DIR "${CMAKE_CURRENT_LIST_DIR}/libs/${LIB_QTAPPBASE_NAME}/build/deploy")
@@ -44,12 +44,13 @@ add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/libs/QtAppBase)
 
 add_executable(${PROJECT_NAME} src/main.cpp)
 
-target_link_libraries(${PROJECT_NAME} PUBLIC
+target_link_libraries(${PROJECT_NAME} PRIVATE
         Qt${QT_VERSION_MAJOR}::Core
         Qt${QT_VERSION_MAJOR}::Network
         Qt${QT_VERSION_MAJOR}::Widgets
         Qt${QT_VERSION_MAJOR}::Concurrent
-        QtAppBase)
+        # QtAppBase
+        ASN1::ASN1Parser)
 
 ## Deploy base library to executable folder
 #file(GLOB QTAPPBASE_LIBS "${LIB_QTAPPBASE_DIR}/lib/*")
