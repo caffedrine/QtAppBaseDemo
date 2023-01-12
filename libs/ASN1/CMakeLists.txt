@@ -4,6 +4,10 @@ project(ASN1Parser VERSION 1.0.1 DESCRIPTION "ASN1 Encoding Parser Library")
 
 include(GNUInstallDirs)
 
+if (MSVC)
+    set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
+endif()
+
 # Get all sources
 file(GLOB_RECURSE LIB_SOURCES "src/*.c" "src/*.cpp")
 
