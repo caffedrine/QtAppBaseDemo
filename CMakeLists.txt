@@ -2,6 +2,9 @@ cmake_minimum_required(VERSION 3.16)
 
 project(qtappbase_app LANGUAGES CXX C)
 
+set (CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin_output)
+set (CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin_output)
+
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
@@ -25,18 +28,15 @@ endif()
 
 # Find required Qt5 or Qt6 dependencies
 find_package(QT NAMES Qt6 Qt5)
-find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets Network Core Concurrent REQUIRED)
+find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets Network Core Concurrent Xml REQUIRED)
 
 # Add ASN1 Parser library
 add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/libs/ASN1)
 
 # Add core library
-set(LIB_QTAPPBASE_NAME QtAppBase)
-
-# 1. Either build library together with the project
 add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/libs/QtAppBase)
 
-## 2. Either build library externally and then link it here
+## Just link a precompiled core library
 #set(LIB_QTAPPBASE_DIR "${CMAKE_CURRENT_LIST_DIR}/libs/${LIB_QTAPPBASE_NAME}/build/deploy")
 #find_library(QTAPPBASE_LIB NAMES ${LIB_QTAPPBASE_NAME} lib${LIB_QTAPPBASE_NAME} HINTS "${CMAKE_BINARY_DIR}/libs/${LIB_QTAPPBASE_NAME}" REQUIRED)
 #include_directories(${LIB_QTAPPBASE_DIR}/includes/thirdparty)
@@ -44,14 +44,13 @@ add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/libs/QtAppBase)
 
 add_executable(${PROJECT_NAME} src/main.cpp)
 
-target_link_libraries(${PROJECT_NAME} PRIVATE
+target_link_libraries(${PROJECT_NAME} PUBLIC
         Qt${QT_VERSION_MAJOR}::Core
         Qt${QT_VERSION_MAJOR}::Network
         Qt${QT_VERSION_MAJOR}::Widgets
+        Qt${QT_VERSION_MAJOR}::Xml
         Qt${QT_VERSION_MAJOR}::Concurrent
         base::QtAppBase
         ASN1::ASN1Parser)
 
-## Deploy base library to executable folder
-#file(GLOB QTAPPBASE_LIBS "${LIB_QTAPPBASE_DIR}/lib/*")
-#add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy ${QTAPPBASE_LIBS} "${CMAKE_BINARY_DIR}/" COMMENT "Copying libQtAppBase to output directory")
+include(deploy.cmake)

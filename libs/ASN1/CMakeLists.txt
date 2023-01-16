@@ -1,7 +1,6 @@
-# inspiration
 cmake_minimum_required(VERSION 3.9)
 
-project(ASN1Parser VERSION 1.0.1 DESCRIPTION "ASN1 Encoding Parser Library")
+project(ASN1Parser LANGUAGES CXX C VERSION 1.0.1 DESCRIPTION "ASN1 Encoding Parser Library")
 
 include(GNUInstallDirs)
 
