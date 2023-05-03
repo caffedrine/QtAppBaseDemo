@@ -45,7 +45,18 @@ add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/libs/QtAppBase)
 #include_directories(${LIB_QTAPPBASE_DIR}/includes/thirdparty)
 #include_directories(${LIB_QTAPPBASE_DIR}/includes)
 
-add_executable(${PROJECT_NAME} src/main.cpp src/MainApp.cpp src/ApplSettings.cpp ui/MainConsole.cpp ui/MainWindow.cpp ui/MainWindow.ui)
+# All source code files
+set(ALL_SOURCES src/main.cpp src/MainApp.cpp src/ApplSettings.cpp ui/MainConsole.cpp ui/MainWindow.cpp ui/MainWindow.ui)
+
+# Proj executable files - if this is not added, application will launch a console simultaneously with the gui app.
+IF (WIN32)
+    # Icon How-To: https://forum.qt.io/topic/122430/setting-up-the-application-information-in-cmake/4
+    # set(APP_ICON_RESOURCE_WINDOWS "${CMAKE_CURRENT_SOURCE_DIR}/res/win.rc")
+    # add_executable(${PROJECT_NAME} WIN32 ${ALL_SOURCES} ${APP_ICON_RESOURCE_WINDOWS})
+    add_executable(${PROJECT_NAME} WIN32 ${ALL_SOURCES})
+ELSE()
+    add_executable(${PROJECT_NAME} ${ALL_SOURCES})
+ENDIF()
 
 target_link_libraries(${PROJECT_NAME} PUBLIC
         Qt${QT_VERSION_MAJOR}::Core
