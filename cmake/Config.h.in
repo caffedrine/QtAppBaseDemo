@@ -1,0 +1,16 @@
+//
+// Helper:
+// https://cmake.org/cmake/help/latest/guide/tutorial/A%20Basic%20Starting%20Point.html#exercise-3-adding-a-version-number-and-configured-header-file
+//
+
+#ifndef _CORE_CONFIG_H_
+#define _CORE_CONFIG_H_
+
+#define PROJECT_NAME "@PROJECT_NAME@"
+#define PROJECT_DESC "@PROJECT_DESCRIPTION@"
+#define PROJECT_VER  "@PROJECT_VERSION@"
+#define PROJECT_VER_MAJOR "@PROJECT_VERSION_MAJOR@"
+#define PROJECT_VER_MINOR "@PROJECT_VERSION_MINOR@"
+#define PTOJECT_VER_PATCH "@PROJECT_VERSION_PATCH@"
+
+#endif //_CORE_CONFIG_H_

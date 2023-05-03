@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.16)
 
-project(qtappbase_app LANGUAGES CXX C)
+project(QtAppBaseDemo DESCRIPTION "Qt demo application" VERSION 1.0.0 LANGUAGES CXX C)
 
 set (CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin_output)
 set (CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin_output)
@@ -30,8 +30,11 @@ endif()
 find_package(QT NAMES Qt6 Qt5)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets Network Core Concurrent Xml REQUIRED)
 
+# Create config file based on CMake definitions
+configure_file(${CMAKE_CURRENT_LIST_DIR}/cmake/Config.h.in ${CMAKE_CURRENT_LIST_DIR}/src/gendata/Config.h)
+
 # Add ASN1 Parser library
-add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/libs/ASN1)
+# add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/libs/ASN1)
 
 # Add core library
 add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/libs/QtAppBase)
@@ -42,7 +45,7 @@ add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/libs/QtAppBase)
 #include_directories(${LIB_QTAPPBASE_DIR}/includes/thirdparty)
 #include_directories(${LIB_QTAPPBASE_DIR}/includes)
 
-add_executable(${PROJECT_NAME} src/main.cpp)
+add_executable(${PROJECT_NAME} src/main.cpp src/MainApp.cpp src/ApplSettings.cpp ui/MainConsole.cpp ui/MainWindow.cpp ui/MainWindow.ui)
 
 target_link_libraries(${PROJECT_NAME} PUBLIC
         Qt${QT_VERSION_MAJOR}::Core
